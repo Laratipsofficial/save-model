@@ -17,9 +17,7 @@ class SaveModelServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('save-model')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_save-model_table')
+            ->hasConfigFile('save_model')
             ->hasCommand(SaveModelCommand::class);
     }
 }

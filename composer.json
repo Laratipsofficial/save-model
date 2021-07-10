@@ -51,10 +51,7 @@
         "laravel": {
             "providers": [
                 "Asdh\\SaveModel\\SaveModelServiceProvider"
-            ],
-            "aliases": {
-                "SaveModel": "Asdh\\SaveModel\\SaveModelFacade"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
