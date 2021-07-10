@@ -3,7 +3,7 @@
 
 return [
     /**
-     * The folder name where the images should be stored
+     * The folder name where the files should be stored
      */
-    'image_upload_folder' => 'images',
+    'file_upload_folder' => 'files',
 ];

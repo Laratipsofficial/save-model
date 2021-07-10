@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
-class ImageField extends Field
+class FileField extends Field
 {
     private ?string $folder = null;
 
@@ -14,7 +14,7 @@ class ImageField extends Field
 
     private ?Closure $fileNameClosure = null;
 
-    private bool $deleteOldImageOnUpdate = true;
+    private bool $deleteOldFileOnUpdate = true;
 
     public function execute(): mixed
     {
@@ -26,7 +26,7 @@ class ImageField extends Field
             return $this->value;
         }
 
-        $this->deleteOldImageIfNecessary();
+        $this->deleteOldFileIfNecessary();
 
         if (!$this->fileNameClosure) {
             return $this->value->store($this->folderName(), $this->diskName());
@@ -58,9 +58,9 @@ class ImageField extends Field
         return $this;
     }
 
-    public function dontDeleteOldImageOnUpdate(): self
+    public function dontDeleteOldFileOnUpdate(): self
     {
-        $this->deleteOldImageOnUpdate = false;
+        $this->deleteOldFileOnUpdate = false;
 
         return $this;
     }
@@ -72,15 +72,15 @@ class ImageField extends Field
 
     private function folderName(): string
     {
-        return $this->folder ?? config('save_model.image_upload_folder');
+        return $this->folder ?? config('save_model.file_upload_folder');
     }
 
-    private function deleteOldImageIfNecessary(): void
+    private function deleteOldFileIfNecessary(): void
     {
-        $imageName = $this->model->getRawOriginal($this->column);
+        $fileName = $this->model->getRawOriginal($this->column);
 
-        if ($this->deleteOldImageOnUpdate && $this->isUpdateMode() && $imageName) {
-            Storage::disk($this->diskName())->delete($imageName);
+        if ($this->deleteOldFileOnUpdate && $this->isUpdateMode() && $fileName) {
+            Storage::disk($this->diskName())->delete($fileName);
         }
     }
 }

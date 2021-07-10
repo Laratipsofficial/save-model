@@ -70,24 +70,24 @@ class SaveModelTest extends TestCase
     {
         Storage::fake('local');
 
-        $oldImageName = UploadedFile::fake()->image('old-image.jpg')->store(config('save_model.image_upload_folder'));
+        $oldFileName = UploadedFile::fake()->image('old-file.jpg')->store(config('save_model.file_upload_folder'));
 
         $user = User::factory()->create([
             'name' => 'Old Name',
             'email' => 'old@gmail.com',
-            'image' => $oldImageName,
+            'image' => $oldFileName,
         ]);
 
         SaveModel::new($user, [
             'name' => 'User name',
             'email' => 'user@gmail.com',
-            'image' => UploadedFile::fake()->image('new-image.jpg'),
+            'image' => UploadedFile::fake()->image('new-file.jpg'),
         ])->execute();
 
         $this->assertDatabaseMissing('users', [
             'name' => 'Old Name',
             'email' => 'old@gmail.com',
-            'image' => $oldImageName,
+            'image' => $oldFileName,
         ]);
 
         $this->assertDatabaseHas('users', [

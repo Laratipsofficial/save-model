@@ -5,7 +5,7 @@ namespace Asdh\SaveModel\Tests\Models;
 use Asdh\SaveModel\Contracts\CanBeSavedContract;
 use Asdh\SaveModel\Database\Factories\UserFactory;
 use Asdh\SaveModel\Fields\DatetimeField;
-use Asdh\SaveModel\Fields\ImageField;
+use Asdh\SaveModel\Fields\FileField;
 use Asdh\SaveModel\Fields\PasswordField;
 use Asdh\SaveModel\Fields\StringField;
 use Illuminate\Auth\Authenticatable;
@@ -35,7 +35,7 @@ class User extends Model implements AuthorizableContract, AuthenticatableContrac
             'email' => StringField::new(),
             'email_verified_at' => DatetimeField::new(),
             'password' => PasswordField::new(),
-            'image' => ImageField::new(),
+            'image' => FileField::new(),
         ];
     }
 }
