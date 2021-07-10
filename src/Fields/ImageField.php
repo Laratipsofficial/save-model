@@ -4,6 +4,7 @@ namespace Asdh\SaveModel\Fields;
 
 use Closure;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ImageField extends Field
 {
@@ -12,6 +13,8 @@ class ImageField extends Field
     private ?string $disk = null;
 
     private ?Closure $fileNameClosure = null;
+
+    private bool $deleteOldImageOnUpdate = true;
 
     public function execute(): mixed
     {
@@ -22,6 +25,8 @@ class ImageField extends Field
         if (!($this->value instanceof UploadedFile)) {
             return $this->value;
         }
+
+        $this->deleteOldImageIfNecessary();
 
         if (!$this->fileNameClosure) {
             return $this->value->store($this->folderName(), $this->diskName());
@@ -53,6 +58,13 @@ class ImageField extends Field
         return $this;
     }
 
+    public function dontDeleteOldImageOnUpdate(): self
+    {
+        $this->deleteOldImageOnUpdate = false;
+
+        return $this;
+    }
+
     private function diskName(): string
     {
         return $this->disk ?? config('filesystems.default');
@@ -61,5 +73,14 @@ class ImageField extends Field
     private function folderName(): string
     {
         return $this->folder ?? config('save_model.image_upload_folder');
+    }
+
+    private function deleteOldImageIfNecessary(): void
+    {
+        $imageName = $this->model->getRawOriginal($this->column);
+
+        if ($this->deleteOldImageOnUpdate && $this->isUpdateMode() && $imageName) {
+            Storage::disk($this->diskName())->delete($imageName);
+        }
     }
 }

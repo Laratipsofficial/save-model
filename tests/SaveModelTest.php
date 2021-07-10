@@ -64,4 +64,36 @@ class SaveModelTest extends TestCase
             'role' => 'admin',
         ]))->execute();
     }
+
+    /** @test */
+    public function model_can_be_updated()
+    {
+        Storage::fake('local');
+
+        $oldImageName = UploadedFile::fake()->image('old-image.jpg')->store(config('save_model.image_upload_folder'));
+
+        $user = User::factory()->create([
+            'name' => 'Old Name',
+            'email' => 'old@gmail.com',
+            'image' => $oldImageName,
+        ]);
+
+        SaveModel::new($user, [
+            'name' => 'User name',
+            'email' => 'user@gmail.com',
+            'image' => UploadedFile::fake()->image('new-image.jpg'),
+        ])->execute();
+
+        $this->assertDatabaseMissing('users', [
+            'name' => 'Old Name',
+            'email' => 'old@gmail.com',
+            'image' => $oldImageName,
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'User name',
+            'email' => 'user@gmail.com',
+            'image' => $user->image,
+        ]);
+    }
 }

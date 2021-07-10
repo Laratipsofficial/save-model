@@ -38,7 +38,12 @@ class SaveModel
     public function execute(): Model
     {
         foreach ($this->data as $column => $value) {
-            $this->model->{$column} = $this->saveableField($column)->setValue($value)->execute();
+            $this->model->{$column} = $this
+                ->saveableField($column)
+                ->setValue($value)
+                ->onColumn($column)
+                ->ofModel($this->model)
+                ->execute();
         }
 
         $this->model->save();

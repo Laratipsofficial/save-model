@@ -2,21 +2,46 @@
 
 namespace Asdh\SaveModel\Fields;
 
+use Illuminate\Database\Eloquent\Model;
+
 abstract class Field
 {
-    protected $value;
+    protected mixed $value;
 
-    public function setValue($value): self
-    {
-        $this->value = $value;
+    protected string $column;
 
-        return $this;
-    }
+    protected Model $model;
+
+    abstract public function execute(): mixed;
 
     public static function new(): static
     {
         return new static;
     }
 
-    abstract public function execute(): mixed;
+    public function setValue($value): static
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    public function onColumn(string $column): static
+    {
+        $this->column = $column;
+
+        return $this;
+    }
+
+    public function ofModel(Model $model): static
+    {
+        $this->model = $model;
+
+        return $this;
+    }
+
+    public function isUpdateMode(): bool
+    {
+        return $this->model->exists;
+    }
 }
