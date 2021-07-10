@@ -117,7 +117,7 @@ class FileFieldTest extends TestCase
         Storage::disk($this->fakeDisk)->assertExists($oldFileName);
 
         $user = User::factory()->create([
-            'image' => $oldFileName
+            'image' => $oldFileName,
         ]);
 
         $this->fileField->setValue($this->fakeFile)->ofModel($user)->execute();
@@ -133,7 +133,7 @@ class FileFieldTest extends TestCase
         Storage::disk($this->fakeDisk)->assertExists($oldFileName);
 
         $user = User::factory()->create([
-            'image' => $oldFileName
+            'image' => $oldFileName,
         ]);
 
         $this->fileField->setValue(null)->ofModel($user)->execute();
@@ -149,7 +149,7 @@ class FileFieldTest extends TestCase
         Storage::disk($this->fakeDisk)->assertExists($oldFileName);
 
         $user = User::factory()->create([
-            'image' => $oldFileName
+            'image' => $oldFileName,
         ]);
 
         $this->fileField->setValue('old-file.jpg')->ofModel($user)->execute();

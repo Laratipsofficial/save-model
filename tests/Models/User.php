@@ -9,15 +9,17 @@ use Asdh\SaveModel\Fields\FileField;
 use Asdh\SaveModel\Fields\PasswordField;
 use Asdh\SaveModel\Fields\StringField;
 use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Model implements AuthorizableContract, AuthenticatableContract, CanBeSavedContract
 {
-    use Authorizable, Authenticatable, HasFactory;
+    use Authorizable;
+    use Authenticatable;
+    use HasFactory;
 
     protected $guarded = [];
 

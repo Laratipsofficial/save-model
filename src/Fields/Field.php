@@ -16,7 +16,7 @@ abstract class Field
 
     public static function new(): static
     {
-        return new static;
+        return new static();
     }
 
     public function setValue($value): static

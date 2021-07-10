@@ -14,12 +14,12 @@ class SaveModel
     {
         $modelClassName = $model::class;
 
-        if (!($model instanceof CanBeSavedContract)) {
+        if (! ($model instanceof CanBeSavedContract)) {
             throw new Exception("The {$modelClassName} must implement " . CanBeSavedInterface::class);
         }
 
         foreach ($data as $column => $value) {
-            if (!$this->saveableFieldExists($column)) {
+            if (! $this->saveableFieldExists($column)) {
                 throw new FieldDoesNotExistException("The field '{$column}' does not exist on the 'saveableFields' method of {$modelClassName}");
             }
         }

@@ -2,7 +2,6 @@
 
 namespace Asdh\SaveModel\Tests;
 
-use Asdh\SaveModel\Fields\DatetimeField;
 use Asdh\SaveModel\Fields\PasswordField;
 use Illuminate\Support\Facades\Hash;
 

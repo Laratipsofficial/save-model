@@ -2,9 +2,9 @@
 
 namespace Asdh\SaveModel\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class MakeFieldCommand extends Command
 {
@@ -22,7 +22,7 @@ class MakeFieldCommand extends Command
 
         $fieldName = Str::afterLast($this->field, '/');
 
-        if (!Str::slug($fieldName)) {
+        if (! Str::slug($fieldName)) {
             $this->error('Invalid field name.');
 
             return;
@@ -30,7 +30,7 @@ class MakeFieldCommand extends Command
 
         $this->fieldClass = Str::studly($fieldName);
 
-        (new Filesystem)->ensureDirectoryExists(app_path($this->destinationDirectory()));
+        (new Filesystem())->ensureDirectoryExists(app_path($this->destinationDirectory()));
 
         if ($this->classAlreadyExists()) {
             $this->error("{$this->fieldClass} already exists!");
@@ -66,12 +66,12 @@ class MakeFieldCommand extends Command
 
     private function classAlreadyExists(): bool
     {
-        return (new Filesystem)->exists($this->destination());
+        return (new Filesystem())->exists($this->destination());
     }
 
     private function generateClass(): void
     {
-        (new Filesystem)->put(
+        (new Filesystem())->put(
             $this->destination(),
             str_replace([
                 '{{FieldClass}}',

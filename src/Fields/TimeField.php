@@ -8,7 +8,7 @@ class TimeField extends Field
 {
     public function execute(): mixed
     {
-        if (!$this->value) {
+        if (! $this->value) {
             return $this->value;
         }
 

@@ -2,9 +2,9 @@
 
 namespace Asdh\SaveModel;
 
+use Asdh\SaveModel\Commands\MakeFieldCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Asdh\SaveModel\Commands\MakeFieldCommand;
 
 class SaveModelServiceProvider extends PackageServiceProvider
 {
