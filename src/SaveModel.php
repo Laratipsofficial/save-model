@@ -18,7 +18,7 @@ class SaveModel
             throw new Exception("The {$modelClassName} must implement " . CanBeSavedContract::class);
         }
 
-        foreach ($data as $column => $value) {
+        foreach (array_keys($data) as $column) {
             if (! $this->saveableFieldExists($column)) {
                 throw new FieldDoesNotExistException("The field '{$column}' does not exist on the 'saveableFields' method of {$modelClassName}");
             }
