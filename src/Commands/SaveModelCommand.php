@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Asdh\SaveModel\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class SaveModelCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'save-model';
 
     public $description = 'My command';
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton\Tests;
+namespace Asdh\SaveModel\Tests;
 
 class ExampleTest extends TestCase
 {
