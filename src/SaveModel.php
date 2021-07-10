@@ -15,7 +15,7 @@ class SaveModel
         $modelClassName = $model::class;
 
         if (! ($model instanceof CanBeSavedContract)) {
-            throw new Exception("The {$modelClassName} must implement " . CanBeSavedInterface::class);
+            throw new Exception("The {$modelClassName} must implement " . CanBeSavedContract::class);
         }
 
         foreach ($data as $column => $value) {
