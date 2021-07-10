@@ -70,7 +70,7 @@ class SaveModelTest extends TestCase
     {
         Storage::fake('local');
 
-        $oldFileName = UploadedFile::fake()->image('old-file.jpg')->store(config('save_model.file_upload_folder'));
+        $oldFileName = UploadedFile::fake()->image('old-file.jpg')->store(config('save_model.file_upload_directory'));
 
         $user = User::factory()->create([
             'name' => 'Old Name',

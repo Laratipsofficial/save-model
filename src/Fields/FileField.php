@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class FileField extends Field
 {
-    private ?string $folder = null;
+    private ?string $directory = null;
 
     private ?string $disk = null;
 
@@ -29,17 +29,17 @@ class FileField extends Field
         $this->deleteOldFileIfNecessary();
 
         if (! $this->fileNameClosure) {
-            return $this->value->store($this->folderName(), $this->diskName());
+            return $this->value->store($this->directoryName(), $this->diskName());
         }
 
         $fileName = ($this->fileNameClosure)($this->value);
 
-        return $this->value->storeAs($this->folderName(), $fileName, $this->diskName());
+        return $this->value->storeAs($this->directoryName(), $fileName, $this->diskName());
     }
 
-    public function setFolder(string $folder): self
+    public function setDirectory(string $directory): self
     {
-        $this->folder = $folder;
+        $this->directory = $directory;
 
         return $this;
     }
@@ -70,9 +70,9 @@ class FileField extends Field
         return $this->disk ?? config('filesystems.default');
     }
 
-    private function folderName(): string
+    private function directoryName(): string
     {
-        return $this->folder ?? config('save_model.file_upload_folder');
+        return $this->directory ?? config('save_model.file_upload_directory');
     }
 
     private function deleteOldFileIfNecessary(): void

@@ -1,9 +1,8 @@
 <?php
 
-
 return [
     /**
-     * The folder name where the files should be stored
+     * The directory name where the files should be stored
      */
-    'file_upload_folder' => 'files',
+    'file_upload_directory' => 'files',
 ];
