@@ -1,0 +1,15 @@
+<?php
+
+namespace {{namespace}};
+
+use Asdh\SaveModel\Fields\Field;
+
+class {{FieldClass}} extends Field
+{
+    public function execute(): mixed
+    {
+        // Perform your logic and return the value...
+
+        // return strtoupper($this->value)
+    }
+}

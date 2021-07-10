@@ -4,7 +4,7 @@ namespace Asdh\SaveModel;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Asdh\SaveModel\Commands\SaveModelCommand;
+use Asdh\SaveModel\Commands\MakeFieldCommand;
 
 class SaveModelServiceProvider extends PackageServiceProvider
 {
@@ -18,6 +18,6 @@ class SaveModelServiceProvider extends PackageServiceProvider
         $package
             ->name('save-model')
             ->hasConfigFile('save_model')
-            ->hasCommand(SaveModelCommand::class);
+            ->hasCommand(MakeFieldCommand::class);
     }
 }
