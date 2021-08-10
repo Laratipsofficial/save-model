@@ -212,6 +212,7 @@ Asdh\SaveModel\Fields\DateField::class
 Asdh\SaveModel\Fields\TimeField::class
 Asdh\SaveModel\Fields\PasswordField::class
 Asdh\SaveModel\Fields\FileField::class
+Asdh\SaveModel\Fields\BooleanField::class
 ```
 
 Other field will be added in the future and I am open to pull requests.
