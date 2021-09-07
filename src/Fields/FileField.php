@@ -20,11 +20,11 @@ class FileField extends Field
 
     public function execute(): mixed
     {
-        if (!$this->value) {
+        if (! $this->value) {
             return $this->value;
         }
 
-        if (!($this->value instanceof UploadedFile)) {
+        if (! ($this->value instanceof UploadedFile)) {
             return $this->value;
         }
 
