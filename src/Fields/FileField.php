@@ -16,25 +16,25 @@ class FileField extends Field
 
     private bool $deleteOldFileOnUpdate = true;
 
+    private bool $uploadAsOriginalName = false;
+
     public function execute(): mixed
     {
-        if (! $this->value) {
+        if (!$this->value) {
             return $this->value;
         }
 
-        if (! ($this->value instanceof UploadedFile)) {
+        if (!($this->value instanceof UploadedFile)) {
             return $this->value;
         }
 
         $this->deleteOldFileIfNecessary();
 
-        if (! $this->fileNameClosure) {
-            return $this->value->store($this->directoryName(), $this->diskName());
-        }
+        $fileName = $this->getFileName();
 
-        $fileName = ($this->fileNameClosure)($this->value);
-
-        return $this->value->storeAs($this->directoryName(), $fileName, $this->diskName());
+        return $fileName
+            ? $this->value->storeAs($this->directoryName(), $fileName, $this->diskName())
+            : $this->value->store($this->directoryName(), $this->diskName());
     }
 
     public function setDirectory(string $directory): self
@@ -65,6 +65,13 @@ class FileField extends Field
         return $this;
     }
 
+    public function uploadAsOriginalName(): self
+    {
+        $this->uploadAsOriginalName = true;
+
+        return $this;
+    }
+
     private function diskName(): string
     {
         return $this->disk ?? config('filesystems.default');
@@ -82,5 +89,20 @@ class FileField extends Field
         if ($this->deleteOldFileOnUpdate && $this->isUpdateMode() && $fileName) {
             Storage::disk($this->diskName())->delete($fileName);
         }
+    }
+
+    private function getFileName(): ?string
+    {
+        $fileName = null;
+
+        if ($this->uploadAsOriginalName) {
+            $fileName = $this->value->getClientOriginalName();
+        }
+
+        if ($this->fileNameClosure) {
+            $fileName = ($this->fileNameClosure)($this->value);
+        }
+
+        return $fileName;
     }
 }

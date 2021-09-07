@@ -186,6 +186,25 @@ public function saveableFields(): array
 }
 ```
 
+If you want to upload the file as the original name then you can do this:
+
+```php
+// app/Models/User.php
+
+use Illuminate\Http\UploadedFile;
+
+public function saveableFields(): array
+{
+    return [
+        'image' => FileField::new()
+            ->setDirectory('images')
+            ->uploadAsOriginalName(),
+    ];
+}
+```
+
+One thing to keep in mind that the `setFileName` method will take precedence over `uploadAsOriginalName` if both methods are being used.
+
 Not only this, the deletion of the file will also be automatically handled when updating a model. By default, when a model is updated, the old file will be automatically deleted if a new file is being uploaded. If you don't want the old images to be deleted then you can chain `dontDeleteOldFileOnUpdate` method.
 
 ```php

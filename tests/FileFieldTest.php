@@ -11,6 +11,8 @@ class FileFieldTest extends TestCase
 {
     private UploadedFile $fakeFile;
 
+    private string $fakeFileName = 'test image.jpg';
+
     private string $fakeDisk;
 
     private string $defaultFilesDirectory;
@@ -25,7 +27,7 @@ class FileFieldTest extends TestCase
 
         Storage::fake($this->fakeDisk);
 
-        $this->fakeFile = UploadedFile::fake()->image('test.jpg');
+        $this->fakeFile = UploadedFile::fake()->image($this->fakeFileName);
         $this->defaultFilesDirectory = config('save_model.file_upload_directory');
         $this->fileField = FileField::new()->onColumn('image')->ofModel(new User());
     }
@@ -75,11 +77,19 @@ class FileFieldTest extends TestCase
     }
 
     /** @test */
+    public function stores_file_with_the_original_name()
+    {
+        $this->fileField->setValue($this->fakeFile)->uploadAsOriginalName()->execute();
+
+        Storage::disk($this->fakeDisk)->assertExists($this->defaultFilesDirectory . '/' . $this->fakeFileName);
+    }
+
+    /** @test */
     public function stores_file_with_a_random_name_when_name_is_not_provided()
     {
         $this->fileField->setValue($this->fakeFile)->execute();
 
-        Storage::disk($this->fakeDisk)->assertMissing($this->defaultFilesDirectory . '/' . 'test.jpg');
+        Storage::disk($this->fakeDisk)->assertMissing($this->defaultFilesDirectory . '/' . $this->fakeFileName);
     }
 
     /** @test */
@@ -93,6 +103,21 @@ class FileFieldTest extends TestCase
             ->execute();
 
         Storage::disk($this->fakeDisk)->assertExists($this->defaultFilesDirectory . '/' . 'custom-name.jpg');
+    }
+
+    /** @test */
+    public function set_file_name_method_takes_precedence_over_upload_as_original_name_if_both_methods_are_used()
+    {
+        $this->fileField
+            ->setValue($this->fakeFile)
+            ->uploadAsOriginalName()
+            ->setFileName(function (UploadedFile $uploadedFile) {
+                return 'custom-name.jpg';
+            })
+            ->execute();
+
+        Storage::disk($this->fakeDisk)->assertExists($this->defaultFilesDirectory . '/' . 'custom-name.jpg');
+        Storage::disk($this->fakeDisk)->assertMissing($this->defaultFilesDirectory . '/' . $this->fakeFileName);
     }
 
     /** @test */
