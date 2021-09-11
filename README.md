@@ -21,7 +21,7 @@ composer require asdh/save-model
 
 You can publish the config file with:
 ```bash
-php artian save-model:publish
+php artisan save-model:publish
 
 or
 

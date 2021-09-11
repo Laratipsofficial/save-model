@@ -19,9 +19,11 @@ class SaveModelServiceProvider extends PackageServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/save_model.php' => config_path('save_model.php'),
             ], 'savemodel-config');
+            
             // Registering package commands.
             $this->commands([
                 SaveModelConfigPublishCommand::class,
+                MakeFieldCommand::class,
             ]);
         }
     }
@@ -35,7 +37,6 @@ class SaveModelServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('save-model')
-            ->hasConfigFile('save_model')
-            ->hasCommand(MakeFieldCommand::class);
+            ->hasConfigFile('save_model');
     }
 }
