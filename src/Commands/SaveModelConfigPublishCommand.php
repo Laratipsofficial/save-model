@@ -19,6 +19,7 @@ class SaveModelConfigPublishCommand extends Command
                 copy(__DIR__ . '/../../config/save_model.php', config_path('save_model.php'));
                 $this->info('Config file re-published successfully.!');
             }
+
             return;
         }
         $this->call('vendor:publish', ['--tag' => "savemodel-config"]);

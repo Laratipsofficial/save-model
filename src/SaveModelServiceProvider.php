@@ -9,7 +9,6 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class SaveModelServiceProvider extends PackageServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      */
@@ -19,7 +18,7 @@ class SaveModelServiceProvider extends PackageServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/save_model.php' => config_path('save_model.php'),
             ], 'savemodel-config');
-            
+
             // Registering package commands.
             $this->commands([
                 SaveModelConfigPublishCommand::class,
