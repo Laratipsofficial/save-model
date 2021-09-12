@@ -21,6 +21,10 @@ composer require asdh/save-model
 
 You can publish the config file with:
 ```bash
+php artisan save-model:publish
+
+or
+
 php artisan vendor:publish --provider="Asdh\SaveModel\SaveModelServiceProvider"
 ```
 
